@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-1.0">
+  <title>Managed Buyer Script</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif; /* Using Inter font as per guidelines */
+    }
+    /* Custom styling for details/summary to ensure consistent appearance */
+    details {
+      @apply bg-gray-50 border border-gray-200 rounded-lg p-4 mt-4;
+    }
+    summary {
+      @apply font-semibold cursor-pointer text-gray-800 py-1;
+    }
+    details p {
+      @apply pt-3 mt-3 border-t border-gray-200 text-gray-600;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 p-5">
+
+  <h1 class="text-4xl font-extrabold text-blue-700 text-center mb-8 rounded-lg p-3 shadow-md bg-white">
+    Managed Buyer Call Script
+  </h1>
+
+  <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8 mb-8">
+    <div class="section" id="intro">
+      <p class="section-title">Introduction</p>
+      <p class="text-lg text-gray-700 mb-4">
+        “Hi, is this <span class="font-semibold text-blue-600">[Seller’s Name]</span>? This is <span class="font-semibold text-blue-600">[Your Name]</span> from <span class="font-semibold text-blue-600">[Dealership Name]</span>. I saw your <span class="font-semibold text-blue-600">[Vehicle Make/Model]</span> listing, and I wanted to reach out to see if you’re still looking to sell your car. Is now a good time to chat?”
+      </p>
+      <details class="mt-4">
+        <summary>Sales Tip: Building Rapport</summary>
+        <p class="text-gray-700">
+          <strong>1. Make Them Laugh:</strong> Use appropriate humor to ease tension and build rapport early on.
+          <br><strong>2. Enthusiasm and Attitude:</strong> Project a positive and energetic demeanor.
+          <br><strong>5. Say Your Customer’s Name:</strong> Personalize the interaction to foster connection.
+          <br><strong>13. Be a Human Being:</strong> Show genuine interest and empathy.
+        </p>
+      </details>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <button class="button-primary" onclick="next('qualify')">Yes</button>
+        <button class="button-secondary" onclick="next('earlyObjection')">No / Not now</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="qualify">
+      <p class="section-title">Qualifying the Lead</p>
+      <p class="text-lg text-gray-700 mb-4">
+        <strong>Great! Mind if I ask a few quick things about the vehicle?</strong>
+      </p>
+      <details class="mt-4">
+        <summary>Sales Tip: Understanding Needs</summary>
+        <p class="text-gray-700">
+          <strong>3. What’s In It For Me:</strong> Frame questions to understand what benefits the seller is looking for.
+          <br><strong>17. Open-Ended Questions:</strong> Use questions that encourage detailed responses to uncover deeper needs.
+          <br><strong>14. Motivation:</strong> Understand what drives your customer to sell.
+        </p>
+      </details>
+      <ul id="questionList" class="list-none space-y-4 text-gray-700">
+        <li class="question-item bg-gray-50 p-4 rounded-lg shadow-sm">
+          <span class="font-medium">Why are you selling the vehicle?</span>
+          <textarea id="q1_response" class="response-input w-full p-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" rows="2" placeholder="Enter response here..."></textarea>
+        </li>
+        <li class="question-item bg-gray-50 p-4 rounded-lg shadow-sm">
+          <span class="font-medium">Does it have a spare set of keys?</span>
+          <select id="q2_response" class="response-input w-full p-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <option value="">Select...</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </li>
+        <li class="question-item bg-gray-50 p-4 rounded-lg shadow-sm">
+          <span class="font-medium">When was the last time the tires were replaced?</span>
+          <div class="flex flex-wrap gap-2 mt-2">
+            <input type="number" id="q3_years" class="response-input p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 w-24" placeholder="Years" min="0">
+            <span class="self-center">years</span>
+            <input type="number" id="q3_months" class="response-input p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 w-24" placeholder="Months" min="0" max="11">
+            <span class="self-center">months ago</span>
+          </div>
+        </li>
+        <li class="question-item bg-gray-50 p-4 rounded-lg shadow-sm">
+          <span class="font-medium">How is the paint job? Any rust, any scratches?</span>
+          <textarea id="q4_response" class="response-input w-full p-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" rows="2" placeholder="Enter response here..."></textarea>
+        </li>
+        <li class="question-item bg-gray-50 p-4 rounded-lg shadow-sm">
+          <span class="font-medium">How is the interior? Any rips, and tear out on the seat, how is the dashboard?</span>
+          <textarea id="q5_response" class="response-input w-full p-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" rows="2" placeholder="Enter response here..."></textarea>
+        </li>
+        <li class="question-item bg-gray-50 p-4 rounded-lg shadow-sm">
+          <span class="font-medium">How is the Engine? Does it run smooth, anything that I should replace soon?</span>
+          <textarea id="q6_response" class="response-input w-full p-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" rows="2" placeholder="Enter response here..."></textarea>
+        </li>
+        <li class="question-item bg-gray-50 p-4 rounded-lg shadow-sm">
+          <span class="font-medium">How are the Windows, any scratches, any chips?</span>
+          <textarea id="q7_response" class="response-input w-full p-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" rows="2" placeholder="Enter response here..."></textarea>
+        </li>
+        <li class="question-item bg-gray-50 p-4 rounded-lg shadow-sm">
+          <span class="font-medium">Is there a loan on the vehicle? (Confirm if they have a loan, and if the title is under his name.)</span>
+          <textarea id="q8_response" class="response-input w-full p-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" rows="2" placeholder="Enter response here..."></textarea>
+        </li>
+        <li class="question-item bg-gray-50 p-4 rounded-lg shadow-sm">
+          <span class="font-medium">How did you arrive at your asking price?</span>
+          <textarea id="q9_response" class="response-input w-full p-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-2 focus:ring-blue-400" rows="2" placeholder="Enter response here..."></textarea>
+        </li>
+        <li class="question-item bg-gray-50 p-4 rounded-lg shadow-sm">
+          <span class="font-medium">Have you received any other guaranteed offers?</span>
+          <textarea id="q10_response" class="response-input w-full p-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" rows="2" placeholder="Enter response here..."></textarea>
+        </li>
+      </ul>
+      <div class="mb-4 mt-6">
+        <label for="vinNumber" class="block text-gray-700 font-medium mb-2">VIN Number:</label>
+        <input type="text" id="vinNumber" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Enter VIN number">
+      </div>
+      <p class="text-lg text-gray-700 mb-4 mt-6">
+        "Great, thanks for that information! Now, could you share the VIN number with me so that I can check the history & provide you with our offer?”
+      </p>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <button class="button-primary" onclick="next('makeOffer')">VIN Shared</button>
+        <button class="button-secondary" onclick="next('vinObjection')">Don't want to share VIN</button>
+        <button class="button-secondary" onclick="goBack()">Back</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="vinObjection">
+      <p class="section-title">VIN Objection</p>
+      <details open>
+        <summary>Acknowledge Concern / Reassure</summary>
+        <p class="text-gray-700">"I understand if you're hesitant to share the VIN. It's a standard step for us to ensure accuracy and provide the most precise offer. It helps us verify the vehicle's history and specifications quickly, so we can give you a fair assessment without needing an in-person inspection right away."</p>
+      </details>
+      <details open class="mt-4">
+        <summary>Offer Alternative / Re-emphasize Benefit</summary>
+        <p class="text-gray-700">"Without the VIN, our offer might be less precise, as it would be based on general information. If you're comfortable, it really helps us give you the best possible estimate. Would you reconsider, or would you prefer to proceed with a more general estimate based on what you've told me?"</p>
+      </details>
+      <details class="mt-4">
+        <summary>Sales Tip: Handling Objections</summary>
+        <p class="text-gray-700">
+          <strong>11. Forgive My Persistence, Please:</strong> Acknowledge your follow-ups politely.
+          <br><strong>19. Your Customer Has a Question You Do Not Want to Answer Now:</strong> Skillfully navigate challenging inquiries.
+        </p>
+      </details>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <button class="button-primary" onclick="next('makeOffer')">Seller Shares VIN / General Estimate</button>
+        <button class="button-secondary" onclick="next('confirmFollowUpDecision')">Still Refuses / Follow Up</button> <button class="button-secondary" onclick="goBack()">Back</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="makeOffer">
+      <p class="section-title">Offer</p>
+      <p class="text-lg text-gray-700 mb-4">
+        "Perfect, thank you! I’m running it now. Let me explain how we work. We specialize in purchasing vehicles from private sellers like you and aim to make the process as seamless as possible. Our process is fast, safe & easy. Would you consider selling it to us?"
+      </p>
+      <div class="mb-4">
+        <label for="offerAmount" class="block text-gray-700 font-medium mb-2">Enter Offer Amount:</label>
+        <input type="text" id="offerAmount" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="e.g., $15,000" oninput="updateOfferDisplay()">
+      </div>
+      <p class="text-lg text-gray-700 mb-4">
+        “Thanks! Based on the market, we’d likely be around <span class="font-semibold text-green-600" id="displayedOffer">$[Offer]</span>. I know it might be less than expected, but many sellers get a better number after an inspection. Want to set something up?”
+      </p>
+      <details class="mt-4">
+        <summary>Sales Tip: Presenting the Offer</summary>
+        <p class="text-gray-700">
+          <strong>3. What’s In It For Me:</strong> Clearly articulate the benefits of selling to you (fast, safe, easy).
+          <br><strong>8. It’s Very Simple:</strong> Keep your explanation of the process clear and concise.
+          <br><strong>12. We vs. They:</strong> Position your dealership as a partner in their selling process.
+          <br><strong>15. The Conscious Sale vs. The Subconscious Sale:</strong> Appeal to both logic (fair offer) and emotion (ease, safety).
+          <br><strong>27. Always Less Expensive, Never Cheaper:</strong> Emphasize value and convenience over just price.
+        </p>
+      </details>
+      <div class="flex flex-wrap gap-3">
+        <button class="button-primary" onclick="next('scheduleAppt')">Yes, schedule</button>
+        <button class="button-secondary" onclick="next('priceConcernOpening')">Too low / Price Objection</button>
+        <button class="button-secondary" onclick="next('scenarioOptions')">Expresses Other Concern</button>
+        <button class="button-secondary" onclick="goBack()">Back</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="scenarioOptions">
+      <p class="section-title">Seller Concerns</p>
+      <p class="text-lg text-gray-700 mb-4">
+        What is the seller's main concern?
+      </p>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <button class="button-primary" onclick="next('scenario1')">Doesn’t Want Dealership</button>
+        <button class="button-primary" onclick="next('scenario2')">Doesn’t Want to Drive</button>
+        <button class="button-primary" onclick="next('scenario3')">Thinks They’ll Get Lowballed</button>
+        <button class="button-secondary" onclick="goBack()">Back</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="scenario1">
+      <p class="section-title">Scenario 1: Doesn’t Want Dealership</p>
+      <details open>
+        <summary>Acknowledge the Concern</summary>
+        <p class="text-gray-700">"I completely understand where you’re coming from. A lot of people feel that way initially because dealerships don’t always have the best reputation in these situations."</p>
+      </details>
+      <details open class="mt-4">
+        <summary>Reframe the Conversation</summary>
+        <p class="text-gray-700">"Our approach is a bit different. We’re focused on providing a transparent and hassle-free process. Unlike selling privately, you won’t have to worry about tire-kickers or no-shows. Plus, we handle all the paperwork for you."</p>
+      </details>
+      <details open class="mt-4">
+        <summary>Ask for an Opportunity</summary>
+        <p class="text-gray-700">"Would it be okay to at least give you an offer? There’s no obligation to move forward unless you feel it’s a good fit."</p>
+      </details>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <button class="button-primary" onclick="next('makeOffer')">Ready for Offer</button>
+        <button class="button-secondary" onclick="next('confirmFollowUpDecision')">Still Hesitant / Follow Up</button>
+        <button class="button-secondary" onclick="goBack()">Back</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="scenario2">
+      <p class="section-title">Scenario 2: Doesn’t Want to Drive</p>
+      <details open>
+        <summary>Acknowledge the Concern</summary>
+        <p class="text-gray-700">"I hear you—making the trip can feel like a hassle."</p>
+      </details>
+      <details open class="mt-4">
+        <summary>Offer a Flexible Solution</summary>
+        <p class="text-gray-700">"We actually make it easy by providing an estimate upfront. If the numbers make sense for you, we can explore arranging something more convenient, like a pickup option or meeting at a location closer to you."</p>
+      </details>
+      <details open class="mt-4">
+        <summary>Encourage Engagement</summary>
+        <p class="text-gray-700">"Would you like me to get you that initial estimate so you can see if it’s worth the trip?"</p>
+      </details>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <button class="button-primary" onclick="next('makeOffer')">Ready for Estimate</button>
+        <button class="button-secondary" onclick="next('confirmFollowUpDecision')">Still Hesitant / Follow Up</button>
+        <button class="button-secondary" onclick="goBack()">Back</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="scenario3">
+      <p class="section-title">Scenario 3: Thinks They’ll Get Lowballed</p>
+      <details open>
+        <summary>Acknowledge the Concern</summary>
+        <p class="text-gray-700">"I understand that concern—nobody wants to feel like they’re not getting a fair value for their car."</p>
+      </details>
+      <details open class="mt-4">
+        <summary>Explain Your Approach</summary>
+        <p class="text-gray-700">"Our goal is to offer a competitive price based on the current market value of your vehicle. We use industry-standard tools and recent market data to ensure our offers are fair and reflect what your car is worth."</p>
+      </details>
+      <details open class="mt-4">
+        <summary>Provide Assurance</summary>
+        <p class="text-gray-700">"If at any point you feel like the offer doesn’t meet your expectations, there’s absolutely no pressure to move forward. Would you be open to seeing what we can offer?"</p>
+      </details>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <button class="button-primary" onclick="next('makeOffer')">Ready for Offer</button>
+        <button class="button-secondary" onclick="next('confirmFollowUpDecision')">Still Hesitant / Follow Up</button>
+        <button class="button-secondary" onclick="goBack()">Back</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="priceConcernOpening">
+      <p class="section-title">Opening Response to Price Concern</p>
+      <details open>
+        <summary>Acknowledge Their Concern</summary>
+        <p class="text-gray-700">"I get it—it’s not easy to hear a number that feels lower than you expected. Let’s chat about it and see what’s going on."</p>
+      </details>
+      <details open class="mt-4">
+        <summary>Show Understanding</summary>
+        <p class="text-gray-700">"A lot of folks feel the same way at first. It’s normal to want to get top dollar for your car. Let’s break it down a bit."</p>
+      </details>
+      <details class="mt-4">
+        <summary>Sales Tip: Addressing Price Objections</summary>
+        <p class="text-gray-700">
+          <strong>23. Excuses, Excuses, Excuses: It Is All Excuses:</strong> Recognize that many objections are habitual; focus on addressing the underlying concern.
+        </p>
+      </details>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <button class="button-primary" onclick="next('priceExplanation')">Continue</button>
+        <button class="button-secondary" onclick="next('confirmFollowUpDecision')">Follow Up</button> <button class="button-secondary" onclick="goBack()">Back</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="priceExplanation">
+      <p class="section-title">Explaining the Price</p>
+      <details open>
+        <summary>Explain the Process Simply</summary>
+        <p class="text-gray-700">"The offer is based on a bunch of things—what similar cars are selling for, the condition of yours, the miles, and any extras it has. We also have to think about things like reconditioning it to get it ready to resell."</p>
+      </details>
+      <details open class="mt-4">
+        <summary>Be Transparent</summary>
+        <p class="text-gray-700">"Want me to walk you through how we came up with the number? I can explain it step by step so it makes more sense."</p>
+      </details>
+      <details class="mt-4">
+        <summary>Sales Tip: Transparency</summary>
+        <p class="text-gray-700">
+          <strong>8. It’s Very Simple:</strong> Simplify your explanation to make it easily understandable.
+          <br><strong>22. Segue to Pricing: How Much Does It Cost:</strong> Transition smoothly into pricing by first establishing value.
+        </p>
+      </details>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <button class="button-primary" onclick="next('offerReframing')">Continue</button>
+        <button class="button-secondary" onclick="goBack()">Back</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="offerReframing">
+      <p class="section-title">Reframing the Offer</p>
+      <details open>
+        <summary>Point Out the Convenience</summary>
+        <p class="text-gray-700">"Selling privately can be a headache—dealing with flaky buyers, haggling, and paperwork. We make it quick and easy so you don’t have to deal with all that."</p>
+      </details>
+      <details open class="mt-4">
+        <summary>Position It as Competitive</summary>
+        <p class="text-gray-700">"We try to keep our offers competitive. If you’ve gotten other offers, let me know—we’d love a shot at matching or even beating it."</p>
+      </details>
+      <details class="mt-4">
+        <summary>Sales Tip: Value Proposition</summary>
+        <p class="text-gray-700">
+          <strong>3. What’s In It For Me:</strong> Re-emphasize the unique benefits of selling to you (convenience, no hassle).
+          <br><strong>27. Always Less Expensive, Never Cheaper:</strong> Frame your offer as value-driven, not just a low price.
+        </p>
+      </details>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <button class="button-primary" onclick="next('offeringSolutions')">Continue</button>
+        <button class="button-secondary" onclick="goBack()">Back</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="offeringSolutions">
+      <p class="section-title">Offering Solutions</p>
+      <details open>
+        <summary>Ask for More Details</summary>
+        <p class="text-gray-700">"Is there something specific that’s bugging you about the offer? Like, do you think we missed something, or do you have service records or upgrades that might add value? Let me know, and I’ll take another look."</p>
+      </details>
+      <details open class="mt-4">
+        <summary>Leave the Door Open</summary>
+        <p class="text-gray-700">"If you’re not feeling it right now, no worries. We can keep your info on file, and if market values change, I’ll give you a heads-up."</p>
+      </details>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <button class="button-primary" onclick="next('closingConversation')">Continue</button>
+        <button class="button-secondary" onclick="goBack()">Back</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="closingConversation">
+      <p class="section-title">Closing the Conversation</p>
+      <details open>
+        <summary>Keep It Friendly</summary>
+        <p class="text-gray-700">"I totally get wanting to take your time with this. Thanks for giving us a shot to make an offer—it means a lot! Can I follow up with you in a couple of weeks to see if it’s still available?”</p>
+      </details>
+      <details open class="mt-4">
+        <summary>Encourage Future Contact</summary>
+        <p class="text-gray-700">"If you change your mind or want to revisit later, just let me know. We’re here to help whenever you’re ready."</p>
+      </details>
+      <details open class="mt-4">
+        <summary>End on a Positive Note</summary>
+        <p class="text-gray-700">"Thanks again, and good luck with the sale!"</p>
+      </details>
+      <details class="mt-4">
+        <summary>Sales Tip: Closing & Follow-up</summary>
+        <p class="text-gray-700">
+          <strong>4. Urgency: A Reason to Act Now:</strong> If applicable, subtly suggest reasons for prompt action.
+          <br><strong>6. Yes Questions:</strong> Ask questions that encourage agreement.
+          <br><strong>7. Right Now:</strong> Emphasize the benefit of immediate decision-making.
+          <br><strong>9. Use Assumptive Close:</strong> Proceed as if the decision is made.
+          <br><strong>10. Use the Third-Party Close:</strong> Share positive experiences of other sellers.
+          <br><strong>20. Stop Selling:</strong> Know when to pause and allow reflection.
+          <br><strong>21. Scheduling Your Follow-Ups:</strong> Plan follow-ups to maintain momentum.
+          <br><strong>24. Listen to the Way Your Customer Says Good-Bye:</strong> Pay attention to cues for next steps.
+          <br><strong>25. It Is an Agreement, Never a Contract:</strong> Frame commitments as mutual.
+          <br><strong>26. Takeaway Close:</strong> Create a sense of potential loss if they don't act.
+          <br><strong>28. When I Lose a Sale:</strong> Learn from every outcome.
+        </p>
+      </details>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <button class="button-primary" onclick="next('toughSituations')">Tough Situations</button>
+        <button class="button-secondary" onclick="next('confirmFollowUpDecision')">End Call</button>
+        <button class="button-secondary" onclick="goBack()">Back</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="toughSituations">
+      <p class="section-title">Optional Word Tracks for Tough Situations</p>
+      <details open>
+        <summary>If they mention a higher offer elsewhere:</summary>
+        <p class="text-gray-700">"That’s awesome! Can you share the details? Sometimes we can adjust if we know what other offers you’re getting. I want to make sure we’re giving you the best deal we can."</p>
+      </details>
+      <details open class="mt-4">
+        <summary>If they want to walk away:</summary>
+        <p class="text-gray-700">"Totally understand! If anything changes or you want to chat again, just reach out. We’re always here. Would it be ok to follow up with you in a couple of weeks?”</p>
+      </details>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <button class="button-primary" onclick="next('confirmFollowUpDecision')">Follow Up</button>
+        <button class="button-secondary" onclick="next('confirmFollowUpDecision')">End Call</button>
+        <button class="button-secondary" onclick="goBack()">Back</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="additionalTips">
+      <p class="section-title">Additional Tips for Smooth Conversations</p>
+      <details open>
+        <summary>Build Rapport</summary>
+        <p class="text-gray-700">"That’s a great car! [Optional: Share something specific about the car model they’re selling, e.g., its reliability, popularity, etc.] This helps establish trust early on."</p>
+      </details>
+      <details open class="mt-4">
+        <summary>Handle Objections Positively</summary>
+        <p class="text-gray-700">Avoid arguing with the seller. Always acknowledge their concerns and position your response as a solution.</p>
+      </details>
+      <details open class="mt-4">
+        <summary>Follow Up</summary>
+        <p class="text-gray-700">"If you’d like, I can follow up with you after you’ve had some time to think about it. What’s the best time to reach out?"</p>
+      </details>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <button class="button-primary" onclick="next('confirmFollowUpDecision')">Follow Up</button>
+        <button class="button-secondary" onclick="next('confirmFollowUpDecision')">End Call</button>
+        <button class="button-secondary" onclick="goBack()">Back</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="scheduleAppt">
+      <p class="section-title">Appointment</p>
+      <p class="text-lg text-gray-700 mb-4">
+        “Awesome! Let’s meet on <span class="font-semibold text-purple-600">[Day]</span> at <span class="font-semibold text-purple-600">[Time]</span>. I’ll message you to confirm and follow up that day.”
+      </p>
+      <p class="text-base text-gray-600 mb-4">
+        "We'll send you a reminder message a day before or an hour before your appointment to confirm."
+      </p>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 font-medium mb-2">Appointment Location:</label>
+        <div class="flex items-center space-x-4">
+          <input type="radio" id="locationDealership" name="appointmentLocation" value="Dealership" class="form-radio h-4 w-4 text-blue-600" checked onchange="toggleAddressInput()">
+          <label for="locationDealership" class="text-gray-700">Dealership</label>
+          <input type="radio" id="locationHisAddress" name="appointmentLocation" value="His Address" class="form-radio h-4 w-4 text-blue-600" onchange="toggleAddressInput()">
+          <label for="locationHisAddress" class="text-gray-700">His Address</label>
+        </div>
+      </div>
+
+      <div id="hisAddressInputContainer" class="mb-4 hidden">
+        <label for="apptLocation" class="block text-gray-700 font-medium mb-2">Enter His Address:</label>
+        <input type="text" id="apptLocation" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="e.g., 123 Main St, Anytown">
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-4">
+        <label for="apptDate" class="block text-gray-700 font-medium">Date:</label>
+        <input type="date" id="apptDate" class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 w-full md:w-auto">
+        <label for="apptTime" class="block text-gray-700 font-medium mt-2 md:mt-0">Time:</label>
+        <input type="time" id="apptTime" class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 w-full md:w-auto">
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <button class="button-primary" onclick="next('confirmation')">Confirm Appointment</button>
+        <button class="button-secondary" onclick="goBack()">Back</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="confirmation">
+      <p class="section-title">Confirmed</p>
+      <p class="text-lg text-gray-700 mb-4">
+        “Thanks again! Looking forward to it. Let me know if anything changes.”
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <button class="button-primary" onclick="endCallAndSummarize('confirmed')">End Call & Summarize</button>
+        <button class="button-secondary" onclick="goBack()">Back</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="earlyObjection">
+      <p class="section-title">Initial Objections</p>
+      <details>
+        <summary>“Not interested in dealers.”</summary>
+        <p>“Totally understandable. We're different: no hassle, safe process, no time-waster, we handle everything.”</p>
+      </details>
+      <details>
+        <summary>“Just looking.”</summary>
+        <p>“No problem. Want me to touch base later this week?”</p>
+      </details>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <button class="button-primary" onclick="next('confirmFollowUpDecision')">Follow up later</button>
+        <button class="button-secondary" onclick="goBack()">Back</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="confirmFollowUpDecision">
+      <p class="section-title">Confirm Follow-up</p>
+      <p class="text-lg text-gray-700 mb-4">
+        Do you want to schedule a follow-up for this lead?
+      </p>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <button class="button-primary" onclick="endCallAndSummarize('followUp')">Yes, schedule a full follow-up</button>
+        <button class="button-secondary" onclick="endCallAndSummarize('textFollowUpPermission')">No, but ask for text follow-up permission</button>
+        <button class="button-secondary" onclick="endCallAndSummarize('noAction')">No, end call completely</button>
+        <button class="button-secondary" onclick="goBack()">Back</button>
+      </div>
+    </div>
+
+    <div class="section hidden" id="summary">
+      <p class="section-title">Call Summary</p>
+      <div id="summaryContent" class="text-lg text-gray-700 mb-4">
+        <p class="text-center text-gray-500">Click "End Call & Summarize" to generate the call summary.</p>
+      </div>
+      <button class="button-primary" onclick="goHome()">Start New Call</button>
+    </div>
+  </div>
+
+  <script>
+    let historyStack = [];
+    let callData = {
+      qualifyResponses: {},
+      vinNumber: '',
+      offerAmount: '',
+      appointmentDetails: null,
+      followUpScheduled: false,
+      textFollowUpPermissionRequested: false, // New field for text follow-up permission
+      callEnded: false // 'confirmed', 'followUp', 'textFollowUpPermission', 'noAction'
+    };
+
+    // Function to update the displayed offer amount in the makeOffer section
+    function updateOfferDisplay() {
+      const offerInput = document.getElementById('offerAmount');
+      const displayedOffer = document.getElementById('displayedOffer');
+      if (offerInput && displayedOffer) {
+        displayedOffer.textContent = offerInput.value ? `$${offerInput.value}` : '$[Offer]';
+      }
+    }
+
+    // Function to save responses from the qualify section
+    function saveQualifyResponses() {
+      const questions = document.querySelectorAll('#questionList .question-item');
+      questions.forEach((item, index) => {
+        const questionText = item.querySelector('span').textContent.trim();
+        let responseValue = '';
+
+        // Handle different input types
+        if (item.querySelector('textarea')) {
+          responseValue = item.querySelector('textarea').value;
+        } else if (item.querySelector('select')) {
+          responseValue = item.querySelector('select').value;
+        } else if (item.querySelector('input[type="number"]')) {
+          // For "When was the last time the tires were replaced?"
+          const years = document.getElementById('q3_years').value;
+          const months = document.getElementById('q3_months').value;
+          if (years || months) {
+            responseValue = `${years ? years + ' years' : ''} ${months ? months + ' months' : ''} ago`.trim();
+          }
+        }
+        callData.qualifyResponses[questionText] = responseValue;
+      });
+      // Save VIN number
+      callData.vinNumber = document.getElementById('vinNumber').value;
+    }
+
+    // Function to save offer amount
+    function saveOfferAmount() {
+      callData.offerAmount = document.getElementById('offerAmount').value;
+    }
+
+    // New function to toggle the visibility of the address input field
+    function toggleAddressInput() {
+      const hisAddressRadio = document.getElementById('locationHisAddress');
+      const hisAddressContainer = document.getElementById('hisAddressInputContainer');
+      const apptLocationInput = document.getElementById('apptLocation'); // Get the input itself
+
+      if (hisAddressRadio.checked) {
+        hisAddressContainer.classList.remove('hidden');
+      } else {
+        hisAddressContainer.classList.add('hidden');
+        apptLocationInput.value = ''; // Clear the input when hidden
+      }
+    }
+
+    // Function to save appointment details
+    function saveAppointmentDetails() {
+      const date = document.getElementById('apptDate').value;
+      const time = document.getElementById('apptTime').value;
+      const locationType = document.querySelector('input[name="appointmentLocation"]:checked').value;
+      let locationAddress = '';
+
+      if (locationType === 'His Address') {
+        locationAddress = document.getElementById('apptLocation').value;
+      }
+
+      if (date || time || locationType || locationAddress) {
+        callData.appointmentDetails = { date, time, locationType, locationAddress };
+      } else {
+        callData.appointmentDetails = null;
+      }
+    }
+
+    // MODIFIED: Function to generate and display the summary without Gemini API
+    function generateSummary() {
+      let summaryText = "";
+
+      // Specific summary format for key details
+      const sellingReason = callData.qualifyResponses["Why are you selling the vehicle?"] || "not provided";
+      const spareKeys = callData.qualifyResponses["Does it have a spare set of keys?"];
+      let keysSummary = "";
+      if (spareKeys === "Yes") {
+        keysSummary = "2 keys";
+      } else if (spareKeys === "No") {
+        keysSummary = "1 key";
+      } else {
+        keysSummary = "keys info not provided";
+      }
+      const tiresReplaced = callData.qualifyResponses["When was the last time the tires were replaced?"] || "not specified";
+
+      summaryText += `<p><strong>Call Summary:</strong></p>`;
+      summaryText += `<p><strong>Selling reason:</strong> ${sellingReason}.</p>`;
+      summaryText += `<p><strong>Keys:</strong> ${keysSummary}.</p>`;
+      summaryText += `<p><strong>Last tire replacement:</strong> ${tiresReplaced}.</p>`;
+
+      // Add VIN number to summary
+      if (callData.vinNumber) {
+          summaryText += `<p><strong>VIN Number:</strong> ${callData.vinNumber}</p>`;
+      }
+
+
+      // Add all other qualification responses
+      let otherQualResponses = "";
+      for (const question in callData.qualifyResponses) {
+          // Skip questions already handled in the specific format above
+          if (question === "Why are you selling the vehicle?" ||
+              question === "Does it have a spare set of keys?" ||
+              question === "When was the last time the tires were replaced?") {
+              continue;
+          }
+
+          const response = callData.qualifyResponses[question];
+          if (response) {
+              otherQualResponses += `<p><strong>${question}:</strong> ${response}</p>`;
+          }
+      }
+      if (otherQualResponses) {
+          summaryText += `<p><strong>Other vehicle details:</strong></p>${otherQualResponses}`;
+      }
+
+
+      // Add offer amount
+      if (callData.offerAmount) {
+          summaryText += `<p><strong>Offer made:</strong> $${callData.offerAmount}.</p>`;
+      }
+
+      // Add appointment or follow-up details
+      if (callData.appointmentDetails && callData.callEnded === 'confirmed') {
+        summaryText += `<p><strong>Appointment confirmed for:</strong> ${callData.appointmentDetails.date} at ${callData.appointmentDetails.time}.</p>`;
+        if (callData.appointmentDetails.locationType === 'Dealership') {
+            summaryText += `<p><strong>Location:</strong> Dealership</p>`;
+        } else if (callData.appointmentDetails.locationType === 'His Address' && callData.appointmentDetails.locationAddress) {
+            summaryText += `<p><strong>Location:</strong> Seller's Address: ${callData.appointmentDetails.locationAddress}</p>`;
+        }
+      } else if (callData.callEnded === 'followUp') {
+        summaryText += "<p><strong>Call status:</strong> Full follow-up scheduled.</p>";
+      } else if (callData.callEnded === 'textFollowUpPermission') {
+        summaryText += "<p><strong>Call status:</strong> Text follow-up permission requested.</p>";
+      } else if (callData.callEnded === 'noAction') {
+        summaryText += "<p><strong>Call status:</strong> Ended without specific action/appointment.</p>";
+      } else {
+        summaryText += "<p><strong>Call status:</strong> Unknown or incomplete.</p>";
+      }
+
+      const summaryDiv = document.getElementById('summaryContent');
+      summaryDiv.innerHTML = summaryText; // Display the directly compiled summary
+    }
+
+    // Function to navigate to a new section
+    function next(id) {
+      // Save data from current section before hiding
+      const current = document.querySelector('.section:not(.hidden)');
+      if (current) {
+        if (current.id === 'qualify') {
+          saveQualifyResponses();
+        } else if (current.id === 'makeOffer') { // Save offer when leaving makeOffer
+          saveOfferAmount();
+        } else if (current.id === 'scheduleAppt') {
+          saveAppointmentDetails();
+        }
+      }
+
+      const target = document.getElementById(id);
+      if (!target) return;
+
+      if (current) {
+        historyStack.push(current.id);
+        current.classList.add('hidden');
+      }
+      target.classList.remove('hidden');
+      // If navigating to makeOffer, update the display immediately
+      if (id === 'makeOffer') {
+        updateOfferDisplay();
+      }
+      // If navigating to scheduleAppt, ensure initial state of address input is correct
+      if (id === 'scheduleAppt') {
+        toggleAddressInput(); // Set initial visibility based on default checked radio
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Function to go back to the previous section in history
+    function goBack() {
+      const current = document.querySelector('.section:not(.hidden)');
+      if (current) current.classList.add('hidden');
+
+      const prevId = historyStack.pop();
+      if (prevId) {
+        const previous = document.getElementById(prevId);
+        if (previous) previous.classList.remove('hidden');
+        // If going back to makeOffer, ensure display is updated
+        if (prevId === 'makeOffer') {
+          updateOfferDisplay();
+        }
+        // If going back to scheduleAppt, ensure initial state of address input is correct
+        if (prevId === 'scheduleAppt') {
+          toggleAddressInput();
+        }
+      } else {
+        goHome();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Function to go to the home/intro section and clear history and data
+    function goHome() {
+      document.querySelectorAll('.section').forEach(el => el.classList.add('hidden'));
+      document.getElementById('intro').classList.remove('hidden');
+      historyStack = [];
+      // Reset all callData
+      callData = {
+        qualifyResponses: {},
+        vinNumber: '',
+        offerAmount: '',
+        appointmentDetails: null,
+        followUpScheduled: false,
+        textFollowUpPermissionRequested: false, // Reset this field
+        callEnded: false
+      };
+      // Clear all input fields in qualify section
+      document.getElementById('q1_response').value = '';
+      document.getElementById('q2_response').value = ''; // Reset select
+      document.getElementById('q3_years').value = '';
+      document.getElementById('q3_months').value = '';
+      document.getElementById('q4_response').value = '';
+      document.getElementById('q5_response').value = '';
+      document.getElementById('q6_response').value = '';
+      document.getElementById('q7_response').value = '';
+      document.getElementById('q8_response').value = '';
+      document.getElementById('q9_response').value = '';
+      document.getElementById('q10_response').value = '';
+      document.getElementById('vinNumber').value = ''; // Clear VIN input
+
+      // Clear offer amount field and reset display
+      document.getElementById('offerAmount').value = '';
+      document.getElementById('displayedOffer').textContent = '$[Offer]';
+
+      // Clear appointment fields and reset location radio
+      document.getElementById('apptDate').value = '';
+      document.getElementById('apptTime').value = '';
+      document.getElementById('apptLocation').value = ''; // Clear address input
+      document.getElementById('locationDealership').checked = true; // Set dealership as default
+      toggleAddressInput(); // Hide address input
+
+      document.getElementById('summaryContent').innerHTML = ''; // Clear summary display
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // New function to end call and summarize
+    function endCallAndSummarize(conclusionType) {
+        callData.callEnded = conclusionType;
+        // Set specific flags based on conclusionType
+        callData.followUpScheduled = (conclusionType === 'followUp');
+        callData.textFollowUpPermissionRequested = (conclusionType === 'textFollowUpPermission');
+
+        // Ensure data from current section is saved before summarizing
+        const current = document.querySelector('.section:not(.hidden)');
+        if (current) {
+            if (current.id === 'qualify') {
+                saveQualifyResponses();
+            } else if (current.id === 'makeOffer') {
+                saveOfferAmount();
+            } else if (current.id === 'scheduleAppt') {
+                saveAppointmentDetails();
+            }
+        }
+
+        document.querySelectorAll('.section').forEach(el => el.classList.add('hidden'));
+        document.getElementById('summary').classList.remove('hidden');
+        generateSummary(); // Call the modified generateSummary
+    }
+
+    // Initialize to show the intro section when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      goHome();
+    });
+  </script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'blue-700': '#1d4ed8',
+            'blue-600': '#2563eb',
+            'blue-500': '#3b82f6',
+            'blue-400': '#60a5fa',
+            'green-600': '#16a34a',
+            'purple-600': '#9333ea',
+            'orange-600': '#ea580c',
+            'gray-100': '#f3f4f6',
+            'gray-50': '#f9fafb',
+            'gray-200': '#e5e7eb',
+            'gray-300': '#d1d5db',
+            'gray-600': '#4b5563',
+            'gray-700': '#374151',
+            'gray-800': '#1f2937',
+          },
+        },
+      },
+      plugins: [],
+      // Custom utilities for buttons
+      corePlugins: {
+        preflight: true,
+      },
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer components {
+      .section {
+        @apply bg-white rounded-xl shadow-md p-6 mb-6 border border-gray-200;
+      }
+      .section-title {
+        @apply text-2xl font-bold text-blue-600 mb-4 pb-2 border-b-2 border-blue-500;
+      }
+      .button-primary {
+        @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200 ease-in-out transform hover:scale-105;
+      }
+      .button-secondary {
+        @apply bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200 ease-in-out transform hover:scale-105;
+      }
+      .question-item {
+        @apply text-gray-700;
+      }
+      .response-input {
+        @apply block; /* Ensure textarea takes full width */
+      }
+    }
+  </style>
+
+</body>
+</html>
